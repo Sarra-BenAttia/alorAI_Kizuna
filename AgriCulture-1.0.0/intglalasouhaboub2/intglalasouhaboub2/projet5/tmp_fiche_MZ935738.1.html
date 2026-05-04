@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche IRA — MZ935738.1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', serif; background: #f5f2ec; color: #2a2a2a; }
+        .header { background: #f5f2ec; padding: 28px 40px 20px; border-bottom: 1px solid #ddd; }
+        .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .platform-label { font-family: 'Courier New', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: #888; text-transform: uppercase; margin-bottom: 10px; }
+        .platform-label .dot { color: #4CAF8A; margin-right: 6px; }
+        .species-name { font-size: 2.4rem; font-style: italic; color: #1a1a1a; font-weight: normal; line-height: 1.1; }
+        .species-sub { font-size: 0.85rem; color: #666; margin-top: 6px; }
+        .header-meta { text-align: right; font-family: 'Courier New', monospace; font-size: 0.75rem; color: #888; line-height: 2; }
+        .header-meta strong { color: #2a2a2a; }
+        .confidence-badge { display: inline-block; margin-top: 10px; padding: 6px 16px; background: #E0C55A; color: white; font-family: 'Courier New', monospace; font-size: 0.8rem; font-weight: bold; border-radius: 3px; }
+        .tags { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+        .tag { padding: 3px 12px; border: 1px solid #ccc; border-radius: 2px; font-size: 0.72rem; font-family: 'Courier New', monospace; color: #555; background: white; }
+        .tag.accent { border-color: #c0392b; color: #c0392b; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid #ddd; }
+        .panel { padding: 24px; border-right: 1px solid #ddd; }
+        .panel:last-child { border-right: none; }
+        .panel-label { font-family: 'Courier New', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: #999; text-transform: uppercase; margin-bottom: 14px; }
+        .photo-main { width: 100%; height: 280px; object-fit: cover; border-radius: 3px; display: block; }
+        .photo-credit { font-size: 0.65rem; color: #aaa; margin-top: 6px; font-style: italic; display: flex; justify-content: space-between; }
+        #cgr-canvas { border-radius: 3px; display: block; width: 100%; }
+        .cgr-comp { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+        .comp-box { text-align: center; padding: 8px 4px; background: white; border-radius: 3px; border: 1px solid #eee; }
+        .comp-pct { font-size: 1.1rem; font-weight: bold; }
+        .comp-base { font-size: 0.6rem; font-family: 'Courier New', monospace; color: #999; margin-top: 2px; }
+        .traits-section { padding: 24px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; border-bottom: 1px solid #ddd; background: white; }
+        .trait-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .trait-label { font-size: 0.78rem; color: #555; min-width: 160px; }
+        .trait-bar-bg { flex: 1; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+        .trait-bar-fill { height: 100%; border-radius: 3px; }
+        .trait-pct { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #555; min-width: 38px; text-align: right; }
+        .section-title { font-family: 'Courier New', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: #999; text-transform: uppercase; margin-bottom: 16px; }
+        .description-section { padding: 28px 40px; border-bottom: 1px solid #ddd; background: #f5f2ec; }
+        .description-text { font-size: 0.9rem; line-height: 1.8; color: #333; max-width: 800px; }
+        .source-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+        .source-tag { padding: 3px 10px; border: 1px solid #ccc; font-family: 'Courier New', monospace; font-size: 0.65rem; color: #777; border-radius: 2px; background: white; }
+        .articles-section { padding: 24px 40px; border-bottom: 1px solid #ddd; background: white; }
+        .article-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+        .article-row:last-child { border-bottom: none; }
+        .article-num { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #999; min-width: 24px; margin-top: 2px; }
+        .article-content { flex: 1; }
+        .article-title { font-size: 0.85rem; color: #1a1a1a; margin-bottom: 3px; line-height: 1.4; }
+        .article-meta { font-size: 0.72rem; color: #888; font-style: italic; margin-bottom: 4px; }
+        .article-link { font-family: 'Courier New', monospace; font-size: 0.68rem; color: #4CAF8A; text-decoration: none; border: 1px solid #4CAF8A; padding: 2px 8px; border-radius: 2px; display: inline-block; margin-top: 3px; }
+        .article-link:hover { background: #4CAF8A; color: white; }
+        .sequence-section { background: #1a1a1a; padding: 20px 40px; border-bottom: 1px solid #333; }
+        .seq-label { font-family: 'Courier New', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: #555; text-transform: uppercase; margin-bottom: 10px; }
+        .seq-text { font-family: 'Courier New', monospace; font-size: 0.8rem; line-height: 1.9; word-break: break-all; }
+        .footer { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: #f5f2ec; }
+        .footer-text { font-family: 'Courier New', monospace; font-size: 0.65rem; color: #aaa; line-height: 1.8; }
+        .footer-badge { font-family: 'Courier New', monospace; font-size: 0.6rem; color: #aaa; text-align: right; border: 1px solid #ddd; padding: 8px 12px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-top">
+        <div>
+            <div class="platform-label"><span class="dot">&#9679;</span>IRA Genomics Platform &middot; Module 7 &middot; DNA Search Engine</div>
+            <div class="species-name">Triticum <span style="font-style:normal;font-size:1.8rem">aestivum</span></div>
+            <div class="species-sub">Triticum aestivum &mdash; Zone aride, Tunisie</div>
+            <div class="tags">
+                <span class="tag">Triticeae</span>
+                <span class="tag">Poaceae</span>
+                <span class="tag accent">Disease Resistance</span>
+                <span class="tag">Zone IRA &middot; Sud Tunisie</span>
+            </div>
+        </div>
+        <div class="header-meta">
+            <div>Gene : <strong>DREB</strong></div>
+            <div>Accession : <strong>MZ935738.1</strong></div>
+            <div>Longueur : <strong>180 bp</strong></div>
+            <div>Analyse : <strong>02/05/2026</strong></div>
+            <div class="confidence-badge">&#10003; 97.7% confiance</div>
+        </div>
+    </div>
+</div>
+
+<div class="main-grid">
+    <div class="panel">
+        <div class="panel-label">Photographie de reference &middot; iNaturalist</div>
+        <img class="photo-main" src="plant_photo.jpg" alt="Triticum aestivum" style="object-fit:cover;width:100%;height:280px">
+        <div class="photo-credit">
+            <span>&#169; (c) Cole Shoemaker, some rights reserved (CC BY), uploaded by Cole Shoemaker &middot; CC BY 4.0</span>
+            <span>iNaturalist</span>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-label">Empreinte CGR &middot; Chaos Game Representation</div>
+        <canvas id="cgr-canvas" width="400" height="300"></canvas>
+        <div class="cgr-comp">
+            <div class="comp-box"><div class="comp-pct" style="color:#4CAF8A">33.9%</div><div class="comp-base">A</div></div>
+            <div class="comp-box"><div class="comp-pct" style="color:#E07B5A">13.3%</div><div class="comp-base">T</div></div>
+            <div class="comp-box"><div class="comp-pct" style="color:#5A9DE0">33.9%</div><div class="comp-base">G</div></div>
+            <div class="comp-box"><div class="comp-pct" style="color:#E0C55A">18.9%</div><div class="comp-base">C</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="traits-section">
+    <div>
+        <div class="section-title">Scores de tolerance aux stress &middot; DNABERT-2 + FAISS</div>
+        <div class="trait-row"><span class="trait-label">Tolerance secheresse</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:82.9%;background:#4CAF8A"></div></div><span class="trait-pct">82.9%</span></div><div class="trait-row"><span class="trait-label">Resistance chaleur</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:0.0%;background:#E07B5A"></div></div><span class="trait-pct">0.0%</span></div><div class="trait-row"><span class="trait-label">Tolerance salinite</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:82.4%;background:#5A9DE0"></div></div><span class="trait-pct">82.4%</span></div><div class="trait-row"><span class="trait-label">Resistance maladies</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:81.4%;background:#E0C55A"></div></div><span class="trait-pct">81.4%</span></div>
+    </div>
+    <div>
+        <div class="section-title">Module 1 &middot; Classification XGBoost (F1=0.738)</div>
+        <div id="xgb-bars"></div>
+    </div>
+</div>
+
+<div class="description-section">
+    <div class="section-title">Description generee &middot; RAG + LLaMA 3.1 &middot; Groq</div>
+    <div class="description-text">The sequence MZ935738.1 corresponds to a Triticum aestivum DREB transcription factor (DREB) gene, which plays a crucial role in drought tolerance by regulating the expression of stress-responsive genes [3]. This gene family is involved in stress tolerance mechanisms, such as drought, heat, and cold, by activating the expression of downstream genes that help plants to survive under adverse conditions [2]. In the context of arid region agriculture in Tunisia, this gene has significant practical applications for crop improvement, as it can be used to develop drought-tolerant wheat varieties that can thrive in water-scarce conditions [1]. The Module 1 prediction suggests that this gene is associated with drought tolerance, with a high confidence of 97.7% and a probability of 0.98.</div>
+    <div class="source-tags">
+        <span class="source-tag">NCBI GenBank</span>
+        <span class="source-tag">Europe PMC</span>
+        <span class="source-tag">DNABERT-2</span>
+        <span class="source-tag">IRA Medenine</span>
+    </div>
+</div>
+
+<div class="articles-section"><div class="section-title">Articles scientifiques · Europe PMC</div><div class="article-row"><span class="article-num">[1]</span><div class="article-content"><div class="article-title">Crop Production under Drought and Heat Stress: Plant Responses and Management Options</div><div class="article-meta">Fahad S, Bajwa AA, Nazir U, Anjum SA, Farooq A, Zohaib A,... (2017)</div><a class="article-link" href="https://pubmed.ncbi.nlm.nih.gov/28706531" target="_blank">PubMed →</a></div></div><div class="article-row"><span class="article-num">[2]</span><div class="article-content"><div class="article-title">Abiotic Stress and Reactive Oxygen Species: Generation, Signaling, and Defense Mechanisms</div><div class="article-meta">Sachdev S, Ansari SA, Ansari MI, Fujita M, Hasanuzzaman M. (2021)</div><a class="article-link" href="https://pubmed.ncbi.nlm.nih.gov/33670123" target="_blank">PubMed →</a></div></div><div class="article-row"><span class="article-num">[3]</span><div class="article-content"><div class="article-title">The transcriptional regulatory network in the drought response and its crosstalk in abiotic stress responses including drought, cold, and heat</div><div class="article-meta">Nakashima K, Yamaguchi-Shinozaki K, Shinozaki K. (2014)</div><a class="article-link" href="https://pubmed.ncbi.nlm.nih.gov/24904597" target="_blank">PubMed →</a></div></div><div class="article-row"><span class="article-num">[4]</span><div class="article-content"><div class="article-title">Impact of Climate Change on Crops Adaptation and Strategies to Tackle Its Outcome: A Review</div><div class="article-meta">Raza A, Razzaq A, Mehmood SS, Zou X, Zhang X, Lv Y, Xu J. (2019)</div><a class="article-link" href="https://pubmed.ncbi.nlm.nih.gov/30704089" target="_blank">PubMed →</a></div></div><div class="article-row"><span class="article-num">[5]</span><div class="article-content"><div class="article-title">AP2/ERF Transcription Factor Regulatory Networks in Hormone and Abiotic Stress Responses in <i>Arabidopsis</i></div><div class="article-meta">Xie Z, Nolan TM, Jiang H, Yin Y. (2019)</div><a class="article-link" href="https://pubmed.ncbi.nlm.nih.gov/30873200" target="_blank">PubMed →</a></div></div></div>
+
+<div class="sequence-section">
+    <div class="seq-label">Sequence &middot; Positions 1-120 / 180 bp</div>
+    <div class="seq-text"><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#E07B5A">T</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#E0C55A">C</span><span style="color:#E0C55A">C</span><span style="color:#E07B5A">T</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#E0C55A">C</span><span style="color:#5A9DE0">G</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#E0C55A">C</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#E07B5A">T</span><span style="color:#E0C55A">C</span><span style="color:#E0C55A">C</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#E07B5A">T</span><span style="color:#E07B5A">T</span><span style="color:#E0C55A">C</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#E07B5A">T</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#E0C55A">C</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#E0C55A">C</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#E07B5A">T</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#E0C55A">C</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#E0C55A">C</span><span style="color:#E07B5A">T</span><span style="color:#E0C55A">C</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#E0C55A">C</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#4CAF8A">A</span><span style="color:#E07B5A">T</span><span style="color:#5A9DE0">G</span><span style="color:#5A9DE0">G</span><span style="color:#4CAF8A">A</span><span style="color:#E07B5A">T</span></div>
+</div>
+
+<div class="footer">
+    <div class="footer-text">
+        IRA &middot; Institut des Regions Arides &middot; Medenine, Tunisie<br>
+        Plateforme IA Genomique &middot; Module 7 &mdash; DNA Search Engine<br>
+        Genere le 02/05/2026 &middot; Sequence : MZ935738.1 &middot; Analyse : DNABERT-2 + k-mer + FAISS
+    </div>
+    <div class="footer-badge">Certificat<br>numerique<br>IRA-2026</div>
+</div>
+
+<script>
+    const canvas  = document.getElementById('cgr-canvas');
+    const ctx     = canvas.getContext('2d');
+    const points  = [
+            [300.0,100.0,"#5A9DE0"],
+            [350.0,50.0,"#5A9DE0"],
+            [175.0,225.0,"#4CAF8A"],
+            [287.5,312.5,"#E07B5A"],
+            [343.75,356.25,"#E07B5A"],
+            [371.88,178.12,"#5A9DE0"],
+            [185.94,89.06,"#E0C55A"],
+            [92.97,44.53,"#E0C55A"],
+            [246.48,222.27,"#E07B5A"],
+            [323.24,311.13,"#E07B5A"],
+            [361.62,155.57,"#5A9DE0"],
+            [180.81,277.78,"#4CAF8A"],
+            [290.41,338.89,"#E07B5A"],
+            [345.2,169.45,"#5A9DE0"],
+            [172.6,284.72,"#4CAF8A"],
+            [86.3,342.36,"#4CAF8A"],
+            [43.15,171.18,"#E0C55A"],
+            [21.58,285.59,"#4CAF8A"],
+            [210.79,142.8,"#5A9DE0"],
+            [305.39,71.4,"#5A9DE0"],
+            [152.7,235.7,"#4CAF8A"],
+            [76.35,317.85,"#4CAF8A"],
+            [238.17,158.92,"#5A9DE0"],
+            [119.09,279.46,"#4CAF8A"],
+            [59.54,339.73,"#4CAF8A"],
+            [229.77,169.87,"#5A9DE0"],
+            [114.89,284.93,"#4CAF8A"],
+            [57.44,342.47,"#4CAF8A"],
+            [28.72,371.23,"#4CAF8A"],
+            [214.36,185.62,"#5A9DE0"],
+            [307.18,292.81,"#E07B5A"],
+            [353.59,146.4,"#5A9DE0"],
+            [176.8,73.2,"#E0C55A"],
+            [288.4,36.6,"#5A9DE0"],
+            [144.2,18.3,"#E0C55A"],
+            [72.1,209.15,"#4CAF8A"],
+            [236.05,104.58,"#5A9DE0"],
+            [318.02,52.29,"#5A9DE0"],
+            [159.01,226.14,"#4CAF8A"],
+            [279.51,113.07,"#5A9DE0"],
+            [139.75,256.54,"#4CAF8A"],
+            [69.88,328.27,"#4CAF8A"],
+            [234.94,164.13,"#5A9DE0"],
+            [117.47,82.07,"#E0C55A"],
+            [58.73,241.03,"#4CAF8A"],
+            [29.37,120.52,"#E0C55A"],
+            [214.68,260.26,"#E07B5A"],
+            [307.34,130.13,"#5A9DE0"],
+            [353.67,65.06,"#5A9DE0"],
+            [376.84,232.53,"#E07B5A"],
+            [188.42,116.27,"#E0C55A"],
+            [94.21,58.13,"#E0C55A"],
+            [247.1,229.07,"#E07B5A"],
+            [323.55,114.53,"#5A9DE0"],
+            [161.78,257.27,"#4CAF8A"],
+            [280.89,328.63,"#E07B5A"],
+            [340.44,364.32,"#E07B5A"],
+            [170.22,182.16,"#E0C55A"],
+            [285.11,91.08,"#5A9DE0"],
+            [342.56,45.54,"#5A9DE0"],
+            [371.28,222.77,"#E07B5A"],
+            [385.64,311.38,"#E07B5A"],
+            [392.82,155.69,"#5A9DE0"],
+            [196.41,77.85,"#E0C55A"],
+            [298.2,238.92,"#E07B5A"],
+            [349.1,119.46,"#5A9DE0"],
+            [174.55,259.73,"#4CAF8A"],
+            [87.28,329.87,"#4CAF8A"],
+            [43.64,364.93,"#4CAF8A"],
+            [21.82,182.47,"#E0C55A"],
+            [10.91,91.23,"#E0C55A"],
+            [5.45,245.62,"#4CAF8A"],
+            [202.73,322.81,"#E07B5A"],
+            [101.36,161.4,"#E0C55A"],
+            [50.68,280.7,"#4CAF8A"],
+            [25.34,340.35,"#4CAF8A"],
+            [212.67,170.18,"#5A9DE0"],
+            [106.34,285.09,"#4CAF8A"],
+            [53.17,342.54,"#4CAF8A"],
+            [226.58,171.27,"#5A9DE0"],
+            [313.29,285.64,"#E07B5A"],
+            [356.65,142.82,"#5A9DE0"],
+            [378.32,71.41,"#5A9DE0"],
+            [189.16,235.7,"#4CAF8A"],
+            [94.58,317.85,"#4CAF8A"],
+            [247.29,158.93,"#5A9DE0"],
+            [323.65,79.46,"#5A9DE0"],
+            [161.82,239.73,"#4CAF8A"],
+            [280.91,119.87,"#5A9DE0"],
+            [340.46,59.93,"#5A9DE0"],
+            [170.23,229.97,"#4CAF8A"],
+            [85.11,314.98,"#4CAF8A"],
+            [42.56,357.49,"#4CAF8A"],
+            [21.28,378.75,"#4CAF8A"],
+            [10.64,189.37,"#E0C55A"],
+            [5.32,94.69,"#E0C55A"],
+            [2.66,247.34,"#4CAF8A"],
+            [201.33,123.67,"#5A9DE0"],
+            [100.66,261.84,"#4CAF8A"],
+            [50.33,330.92,"#4CAF8A"],
+            [225.17,165.46,"#5A9DE0"],
+            [112.58,82.73,"#E0C55A"],
+            [256.29,241.36,"#E07B5A"],
+            [128.15,120.68,"#E0C55A"],
+            [64.07,60.34,"#E0C55A"],
+            [32.04,230.17,"#4CAF8A"],
+            [216.02,115.09,"#5A9DE0"],
+            [108.01,57.54,"#E0C55A"],
+            [54.0,228.77,"#4CAF8A"],
+            [27.0,314.39,"#4CAF8A"],
+            [213.5,157.19,"#5A9DE0"],
+            [106.75,278.6,"#4CAF8A"],
+            [253.38,139.3,"#5A9DE0"],
+            [126.69,269.65,"#4CAF8A"],
+            [63.34,334.82,"#4CAF8A"],
+            [231.67,367.41,"#E07B5A"],
+            [315.84,183.71,"#5A9DE0"],
+            [357.92,91.85,"#5A9DE0"],
+            [178.96,245.93,"#4CAF8A"],
+            [289.48,322.96,"#E07B5A"],
+            [144.74,161.48,"#E0C55A"],
+            [72.37,80.74,"#E0C55A"],
+            [36.18,40.37,"#E0C55A"],
+            [218.09,20.19,"#5A9DE0"],
+            [309.05,10.09,"#5A9DE0"],
+            [154.52,205.05,"#4CAF8A"],
+            [77.26,302.52,"#4CAF8A"],
+            [38.63,351.26,"#4CAF8A"],
+            [219.32,175.63,"#5A9DE0"],
+            [109.66,87.82,"#E0C55A"],
+            [54.83,243.91,"#4CAF8A"],
+            [27.41,121.95,"#E0C55A"],
+            [13.71,60.98,"#E0C55A"],
+            [206.85,30.49,"#5A9DE0"],
+            [303.43,15.24,"#5A9DE0"],
+            [151.71,7.62,"#E0C55A"],
+            [75.86,3.81,"#E0C55A"],
+            [37.93,201.91,"#4CAF8A"],
+            [18.96,300.95,"#4CAF8A"],
+            [209.48,150.48,"#5A9DE0"],
+            [304.74,75.24,"#5A9DE0"],
+            [352.37,37.62,"#5A9DE0"],
+            [376.19,218.81,"#E07B5A"],
+            [388.09,309.4,"#E07B5A"],
+            [194.05,154.7,"#E0C55A"],
+            [97.02,77.35,"#E0C55A"],
+            [48.51,238.68,"#4CAF8A"],
+            [24.26,319.34,"#4CAF8A"],
+            [212.13,159.67,"#5A9DE0"],
+            [106.06,279.83,"#4CAF8A"],
+            [53.03,339.92,"#4CAF8A"],
+            [26.52,369.96,"#4CAF8A"],
+            [213.26,184.98,"#5A9DE0"],
+            [306.63,92.49,"#5A9DE0"],
+            [353.31,46.24,"#5A9DE0"],
+            [376.66,223.12,"#E07B5A"],
+            [388.33,111.56,"#5A9DE0"],
+            [194.16,55.78,"#E0C55A"],
+            [97.08,227.89,"#4CAF8A"],
+            [248.54,313.95,"#E07B5A"],
+            [324.27,156.97,"#5A9DE0"],
+            [362.14,78.49,"#5A9DE0"],
+            [181.07,39.24,"#E0C55A"],
+            [90.53,219.62,"#4CAF8A"],
+            [245.27,109.81,"#5A9DE0"],
+            [322.63,54.91,"#5A9DE0"],
+            [361.32,27.45,"#5A9DE0"],
+            [180.66,213.73,"#4CAF8A"],
+            [90.33,306.86,"#4CAF8A"],
+            [45.16,353.43,"#4CAF8A"],
+            [222.58,176.72,"#5A9DE0"],
+            [311.29,88.36,"#5A9DE0"],
+            [155.65,244.18,"#4CAF8A"],
+            [277.82,122.09,"#5A9DE0"],
+            [338.91,61.04,"#5A9DE0"],
+            [369.46,230.52,"#E07B5A"],
+            [184.73,115.26,"#E0C55A"],
+            [92.36,57.63,"#E0C55A"],
+            [46.18,228.82,"#4CAF8A"],
+            [223.09,114.41,"#5A9DE0"],
+        ];
+    const dotSize = 2.0;
+
+    ctx.fillStyle = '#0a0f0a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = 'bold 11px Courier New';
+    ctx.fillStyle = '#E0C55A'; ctx.fillText('C', 6, 14);
+    ctx.fillStyle = '#5A9DE0'; ctx.fillText('G', canvas.width-14, 14);
+    ctx.fillStyle = '#4CAF8A'; ctx.fillText('A', 6, canvas.height-4);
+    ctx.fillStyle = '#E07B5A'; ctx.fillText('T', canvas.width-14, canvas.height-4);
+
+    points.forEach(function(p) {
+        ctx.beginPath();
+        ctx.arc(p[0] * canvas.width / 400, p[1] * canvas.height / 400, dotSize, 0, Math.PI * 2);
+        ctx.fillStyle = p[2] + 'bb';
+        ctx.fill();
+    });
+
+    const xgbProbs  = {"disease_resistance": 0.9769, "drought_tolerance": 0.007, "heat_tolerance": 0.0059, "salt_tolerance": 0.0102};
+    const xgbColors = {"drought_tolerance": "#4CAF8A", "heat_tolerance": "#E07B5A", "salt_tolerance": "#5A9DE0", "disease_resistance": "#E0C55A"};
+    const xgbLabels = {"drought_tolerance": "Tolerance secheresse", "heat_tolerance": "Resistance chaleur", "salt_tolerance": "Tolerance salinite", "disease_resistance": "Resistance maladies"};
+    const xgbDiv    = document.getElementById('xgb-bars');
+    if (xgbDiv && xgbProbs) {
+        Object.entries(xgbProbs).forEach(function(entry) {
+            var trait = entry[0], prob = entry[1];
+            var pct   = (prob * 100).toFixed(0);
+            var color = xgbColors[trait] || '#888';
+            var label = xgbLabels[trait] || trait;
+            xgbDiv.innerHTML += '<div class="trait-row"><span class="trait-label">' + label + '</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div><span class="trait-pct">' + pct + '%</span></div>';
+        });
+    }
+</script>
+</body>
+</html>

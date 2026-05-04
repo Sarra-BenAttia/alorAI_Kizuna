@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche IRA — HG916393.1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', serif; background: #f5f2ec; color: #2a2a2a; }
+        .header { background: #f5f2ec; padding: 28px 40px 20px; border-bottom: 1px solid #ddd; }
+        .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .platform-label { font-family: 'Courier New', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: #888; text-transform: uppercase; margin-bottom: 10px; }
+        .platform-label .dot { color: #4CAF8A; margin-right: 6px; }
+        .species-name { font-size: 2.4rem; font-style: italic; color: #1a1a1a; font-weight: normal; line-height: 1.1; }
+        .species-sub { font-size: 0.85rem; color: #666; margin-top: 6px; }
+        .header-meta { text-align: right; font-family: 'Courier New', monospace; font-size: 0.75rem; color: #888; line-height: 2; }
+        .header-meta strong { color: #2a2a2a; }
+        .confidence-badge { display: inline-block; margin-top: 10px; padding: 6px 16px; background: #E0C55A; color: white; font-family: 'Courier New', monospace; font-size: 0.8rem; font-weight: bold; border-radius: 3px; }
+        .tags { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+        .tag { padding: 3px 12px; border: 1px solid #ccc; border-radius: 2px; font-size: 0.72rem; font-family: 'Courier New', monospace; color: #555; background: white; }
+        .tag.accent { border-color: #c0392b; color: #c0392b; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid #ddd; }
+        .panel { padding: 24px; border-right: 1px solid #ddd; }
+        .panel:last-child { border-right: none; }
+        .panel-label { font-family: 'Courier New', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: #999; text-transform: uppercase; margin-bottom: 14px; }
+        .photo-main { width: 100%; height: 280px; object-fit: cover; border-radius: 3px; display: block; }
+        .photo-credit { font-size: 0.65rem; color: #aaa; margin-top: 6px; font-style: italic; display: flex; justify-content: space-between; }
+        #cgr-canvas { border-radius: 3px; display: block; width: 100%; }
+        .cgr-comp { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+        .comp-box { text-align: center; padding: 8px 4px; background: white; border-radius: 3px; border: 1px solid #eee; }
+        .comp-pct { font-size: 1.1rem; font-weight: bold; }
+        .comp-base { font-size: 0.6rem; font-family: 'Courier New', monospace; color: #999; margin-top: 2px; }
+        .traits-section { padding: 24px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; border-bottom: 1px solid #ddd; background: white; }
+        .trait-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .trait-label { font-size: 0.78rem; color: #555; min-width: 160px; }
+        .trait-bar-bg { flex: 1; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+        .trait-bar-fill { height: 100%; border-radius: 3px; }
+        .trait-pct { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #555; min-width: 38px; text-align: right; }
+        .section-title { font-family: 'Courier New', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: #999; text-transform: uppercase; margin-bottom: 16px; }
+        .description-section { padding: 28px 40px; border-bottom: 1px solid #ddd; background: #f5f2ec; }
+        .description-text { font-size: 0.9rem; line-height: 1.8; color: #333; max-width: 800px; }
+        .source-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+        .source-tag { padding: 3px 10px; border: 1px solid #ccc; font-family: 'Courier New', monospace; font-size: 0.65rem; color: #777; border-radius: 2px; background: white; }
+        .articles-section { padding: 24px 40px; border-bottom: 1px solid #ddd; background: white; }
+        .article-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+        .article-row:last-child { border-bottom: none; }
+        .article-num { font-family: 'Courier New', monospace; font-size: 0.75rem; color: #999; min-width: 24px; margin-top: 2px; }
+        .article-content { flex: 1; }
+        .article-title { font-size: 0.85rem; color: #1a1a1a; margin-bottom: 3px; line-height: 1.4; }
+        .article-meta { font-size: 0.72rem; color: #888; font-style: italic; margin-bottom: 4px; }
+        .article-link { font-family: 'Courier New', monospace; font-size: 0.68rem; color: #4CAF8A; text-decoration: none; border: 1px solid #4CAF8A; padding: 2px 8px; border-radius: 2px; display: inline-block; margin-top: 3px; }
+        .article-link:hover { background: #4CAF8A; color: white; }
+        .sequence-section { background: #1a1a1a; padding: 20px 40px; border-bottom: 1px solid #333; }
+        .seq-label { font-family: 'Courier New', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: #555; text-transform: uppercase; margin-bottom: 10px; }
+        .seq-text { font-family: 'Courier New', monospace; font-size: 0.8rem; line-height: 1.9; word-break: break-all; }
+        .footer { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: #f5f2ec; }
+        .footer-text { font-family: 'Courier New', monospace; font-size: 0.65rem; color: #aaa; line-height: 1.8; }
+        .footer-badge { font-family: 'Courier New', monospace; font-size: 0.6rem; color: #aaa; text-align: right; border: 1px solid #ddd; padding: 8px 12px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-top">
+        <div>
+            <div class="platform-label"><span class="dot">&#9679;</span>IRA Genomics Platform &middot; Module 7 &middot; DNA Search Engine</div>
+            <div class="species-name">Triticum <span style="font-style:normal;font-size:1.8rem">aestivum</span></div>
+            <div class="species-sub">Triticum aestivum &mdash; Zone aride, Tunisie</div>
+            <div class="tags">
+                <span class="tag">Triticeae</span>
+                <span class="tag">Poaceae</span>
+                <span class="tag accent">Disease Resistance</span>
+                <span class="tag">Zone IRA &middot; Sud Tunisie</span>
+            </div>
+        </div>
+        <div class="header-meta">
+            <div>Gene : <strong>Unknown</strong></div>
+            <div>Accession : <strong>HG916393.1</strong></div>
+            <div>Longueur : <strong>120 bp</strong></div>
+            <div>Analyse : <strong>04/05/2026</strong></div>
+            <div class="confidence-badge">&#10003; 91.8% confiance</div>
+        </div>
+    </div>
+</div>
+
+<div class="main-grid">
+    <div class="panel">
+        <div class="panel-label">Photographie de reference &middot; iNaturalist</div>
+        <div class="photo-main" style="background:#e8e4dc;height:280px"></div>
+        <div class="photo-credit">
+            <span>&#169;  &middot; CC BY 4.0</span>
+            <span></span>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-label">Empreinte CGR &middot; Chaos Game Representation</div>
+        <canvas id="cgr-canvas" width="400" height="300"></canvas>
+        <div class="cgr-comp">
+            <div class="comp-box"><div class="comp-pct" style="color:#4CAF8A">28.6%</div><div class="comp-base">A</div></div>
+            <div class="comp-box"><div class="comp-pct" style="color:#E07B5A">39.3%</div><div class="comp-base">T</div></div>
+            <div class="comp-box"><div class="comp-pct" style="color:#5A9DE0">14.3%</div><div class="comp-base">G</div></div>
+            <div class="comp-box"><div class="comp-pct" style="color:#E0C55A">17.9%</div><div class="comp-base">C</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="traits-section">
+    <div>
+        <div class="section-title">Scores de tolerance aux stress &middot; DNABERT-2 + FAISS</div>
+        <div class="trait-row"><span class="trait-label">Tolerance secheresse</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:0.0%;background:#4CAF8A"></div></div><span class="trait-pct">0.0%</span></div><div class="trait-row"><span class="trait-label">Resistance chaleur</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:6.2%;background:#E07B5A"></div></div><span class="trait-pct">6.2%</span></div><div class="trait-row"><span class="trait-label">Tolerance salinite</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:5.2%;background:#5A9DE0"></div></div><span class="trait-pct">5.2%</span></div><div class="trait-row"><span class="trait-label">Resistance maladies</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:4.7%;background:#E0C55A"></div></div><span class="trait-pct">4.7%</span></div>
+    </div>
+    <div>
+        <div class="section-title">Module 1 &middot; Classification XGBoost (F1=0.738)</div>
+        <div id="xgb-bars"></div>
+    </div>
+</div>
+
+<div class="description-section">
+    <div class="section-title">Description generee &middot; RAG + LLaMA 3.1 &middot; Groq</div>
+    <div class="description-text">HG916393.1 is a cDNA clone associated with heat tolerance in wheat (Triticum aestivum). This sequence is linked to heat stress at 42°C during the post-anthesis stage, just before grain filling [2]. The gene family and specific gene name are unknown, but its expression is crucial for heat tolerance, which is essential for arid region agriculture in Tunisia. Practical applications for IRA research include using this sequence to develop heat-tolerant wheat varieties that can thrive in the challenging climate of Tunisia.</div>
+    <div class="source-tags">
+        <span class="source-tag">NCBI GenBank</span>
+        <span class="source-tag">Europe PMC</span>
+        <span class="source-tag">DNABERT-2</span>
+        <span class="source-tag">IRA Medenine</span>
+    </div>
+</div>
+
+<div class="articles-section"><div class="section-title">Articles scientifiques · Europe PMC</div><div class="article-row"><span class="article-num">[1]</span><div class="article-content"><div class="article-title">Identification of genes expressed in response of leaf rust infection in adult plant resistant wheat stock CSP44 and thei</div><div class="article-meta"></div></div></div><div class="article-row"><span class="article-num">[2]</span><div class="article-content"><div class="article-title">Analysis of heat responsive SSH library during post anthesis stage just before grain filling in wheat cv. C306 (Triticum</div><div class="article-meta"></div></div></div><div class="article-row"><span class="article-num">[3]</span><div class="article-content"><div class="article-title">Transcripts involved in response to stripe rust pathogen inoculation resistance of stripe rust resistant Triticum aestiv</div><div class="article-meta"></div></div></div></div>
+
+<div class="sequence-section">
+    <div class="seq-label">Sequence &middot; Positions 1-120 / 120 bp</div>
+    <div class="seq-text"><span style="color:#888">H</span><span style="color:#5A9DE0">G</span><span style="color:#888">9</span><span style="color:#888">1</span><span style="color:#888">6</span><span style="color:#888">3</span><span style="color:#888">9</span><span style="color:#888">3</span><span style="color:#888"> </span><span style="color:#888">H</span><span style="color:#888">e</span><span style="color:#4CAF8A">a</span><span style="color:#E07B5A">t</span><span style="color:#888"> </span><span style="color:#888">s</span><span style="color:#E07B5A">t</span><span style="color:#888">r</span><span style="color:#888">e</span><span style="color:#888">s</span><span style="color:#888">s</span><span style="color:#888"> </span><span style="color:#4CAF8A">a</span><span style="color:#E07B5A">t</span><span style="color:#888"> </span><span style="color:#888">4</span><span style="color:#888">2</span><span style="color:#888"> </span><span style="color:#888">0</span><span style="color:#E0C55A">C</span><span style="color:#888"> </span><span style="color:#4CAF8A">a</span><span style="color:#E07B5A">t</span><span style="color:#888"> </span><span style="color:#888">p</span><span style="color:#888">o</span><span style="color:#888">s</span><span style="color:#E07B5A">t</span><span style="color:#888"> </span><span style="color:#4CAF8A">a</span><span style="color:#888">n</span><span style="color:#E07B5A">t</span><span style="color:#888">h</span><span style="color:#888">e</span><span style="color:#888">s</span><span style="color:#888">i</span><span style="color:#888">s</span><span style="color:#888"> </span><span style="color:#888">s</span><span style="color:#E07B5A">t</span><span style="color:#4CAF8A">a</span><span style="color:#5A9DE0">g</span><span style="color:#888">e</span><span style="color:#888"> </span><span style="color:#888">j</span><span style="color:#888">u</span><span style="color:#888">s</span><span style="color:#E07B5A">t</span><span style="color:#888"> </span><span style="color:#888">b</span><span style="color:#888">e</span><span style="color:#888">f</span><span style="color:#888">o</span><span style="color:#888">r</span><span style="color:#888">e</span><span style="color:#888"> </span><span style="color:#5A9DE0">g</span><span style="color:#888">r</span><span style="color:#4CAF8A">a</span><span style="color:#888">i</span><span style="color:#888">n</span><span style="color:#888"> </span><span style="color:#888">f</span><span style="color:#888">i</span><span style="color:#888">l</span><span style="color:#888">l</span><span style="color:#888">i</span><span style="color:#888">n</span><span style="color:#5A9DE0">g</span><span style="color:#888"> </span><span style="color:#E07B5A">T</span><span style="color:#888">r</span><span style="color:#888">i</span><span style="color:#E07B5A">t</span><span style="color:#888">i</span><span style="color:#E0C55A">c</span><span style="color:#888">u</span><span style="color:#888">m</span><span style="color:#888"> </span><span style="color:#4CAF8A">a</span><span style="color:#888">e</span><span style="color:#888">s</span><span style="color:#E07B5A">t</span><span style="color:#888">i</span><span style="color:#888">v</span><span style="color:#888">u</span><span style="color:#888">m</span><span style="color:#888"> </span><span style="color:#E0C55A">c</span><span style="color:#888">D</span><span style="color:#888">N</span><span style="color:#4CAF8A">A</span><span style="color:#888"> </span><span style="color:#E0C55A">c</span><span style="color:#888">l</span><span style="color:#888">o</span><span style="color:#888">n</span><span style="color:#888">e</span><span style="color:#888"> </span><span style="color:#E0C55A">C</span><span style="color:#888">3</span><span style="color:#888">0</span><span style="color:#888">6</span><span style="color:#888">_</span><span style="color:#888">4</span><span style="color:#888">2</span><span style="color:#888">_</span><span style="color:#888">3</span><span style="color:#888">6</span><span style="color:#888">7</span><span style="color:#888">,</span></div>
+</div>
+
+<div class="footer">
+    <div class="footer-text">
+        IRA &middot; Institut des Regions Arides &middot; Medenine, Tunisie<br>
+        Plateforme IA Genomique &middot; Module 7 &mdash; DNA Search Engine<br>
+        Genere le 04/05/2026 &middot; Sequence : HG916393.1 &middot; Analyse : DNABERT-2 + k-mer + FAISS
+    </div>
+    <div class="footer-badge">Certificat<br>numerique<br>IRA-2026</div>
+</div>
+
+<script>
+    const canvas  = document.getElementById('cgr-canvas');
+    const ctx     = canvas.getContext('2d');
+    const points  = [
+            [300.0,100.0,"#5A9DE0"],
+            [150.0,250.0,"#4CAF8A"],
+            [275.0,325.0,"#E07B5A"],
+            [337.5,362.5,"#E07B5A"],
+            [168.75,381.25,"#4CAF8A"],
+            [284.38,390.62,"#E07B5A"],
+            [142.19,195.31,"#E0C55A"],
+            [71.09,297.66,"#4CAF8A"],
+            [235.55,348.83,"#E07B5A"],
+            [317.77,374.41,"#E07B5A"],
+            [158.89,387.21,"#4CAF8A"],
+            [279.44,393.6,"#E07B5A"],
+            [339.72,396.8,"#E07B5A"],
+            [169.86,398.4,"#4CAF8A"],
+            [284.93,199.2,"#5A9DE0"],
+            [342.47,299.6,"#E07B5A"],
+            [371.23,149.8,"#5A9DE0"],
+            [185.62,274.9,"#4CAF8A"],
+            [292.81,137.45,"#5A9DE0"],
+            [346.4,268.73,"#E07B5A"],
+            [373.2,334.36,"#E07B5A"],
+            [186.6,167.18,"#E0C55A"],
+            [93.3,283.59,"#4CAF8A"],
+            [246.65,341.8,"#E07B5A"],
+            [123.33,170.9,"#E0C55A"],
+            [61.66,285.45,"#4CAF8A"],
+            [30.83,142.72,"#E0C55A"],
+            [15.42,71.36,"#E0C55A"],
+        ];
+    const dotSize = 2.0;
+
+    ctx.fillStyle = '#0a0f0a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = 'bold 11px Courier New';
+    ctx.fillStyle = '#E0C55A'; ctx.fillText('C', 6, 14);
+    ctx.fillStyle = '#5A9DE0'; ctx.fillText('G', canvas.width-14, 14);
+    ctx.fillStyle = '#4CAF8A'; ctx.fillText('A', 6, canvas.height-4);
+    ctx.fillStyle = '#E07B5A'; ctx.fillText('T', canvas.width-14, canvas.height-4);
+
+    points.forEach(function(p) {
+        ctx.beginPath();
+        ctx.arc(p[0] * canvas.width / 400, p[1] * canvas.height / 400, dotSize, 0, Math.PI * 2);
+        ctx.fillStyle = p[2] + 'bb';
+        ctx.fill();
+    });
+
+    const xgbProbs  = {"disease_resistance": 0.9179, "drought_tolerance": 0.0445, "heat_tolerance": 0.0172, "salt_tolerance": 0.0205};
+    const xgbColors = {"drought_tolerance": "#4CAF8A", "heat_tolerance": "#E07B5A", "salt_tolerance": "#5A9DE0", "disease_resistance": "#E0C55A"};
+    const xgbLabels = {"drought_tolerance": "Tolerance secheresse", "heat_tolerance": "Resistance chaleur", "salt_tolerance": "Tolerance salinite", "disease_resistance": "Resistance maladies"};
+    const xgbDiv    = document.getElementById('xgb-bars');
+    if (xgbDiv && xgbProbs) {
+        Object.entries(xgbProbs).forEach(function(entry) {
+            var trait = entry[0], prob = entry[1];
+            var pct   = (prob * 100).toFixed(0);
+            var color = xgbColors[trait] || '#888';
+            var label = xgbLabels[trait] || trait;
+            xgbDiv.innerHTML += '<div class="trait-row"><span class="trait-label">' + label + '</span><div class="trait-bar-bg"><div class="trait-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div><span class="trait-pct">' + pct + '%</span></div>';
+        });
+    }
+</script>
+</body>
+</html>
