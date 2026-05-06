@@ -245,6 +245,59 @@ GROQ_KEY=your_groq_api_key
 
 ---
 
+
+## 📱 AgriCulture Mobile (Farmer Module)
+
+The AgriCulture Mobile application is a dedicated, high-performance solution built specifically for farmers ("Agriculteurs"). It brings the power of the AgriCulture AI and IoT platform directly to the palm of their hands, optimized for field use with a focus on accessibility and real-time insights.
+
+### 🛠 Technical Stack
+- **Framework:** [Flutter](https://flutter.dev/) (Cross-platform)
+- **Language:** Dart
+- **UI/UX:** Custom Material Design with Farmer-Centric ergonomics
+- **Connectivity:** Integrated with AgriCulture IoT Gateway & REST APIs
+
+### ✨ Key Features
+- **🚜 Farmer Dashboard:** A simplified, intuitive interface providing an at-a-glance view of field health and active alerts.
+- **📡 IoT Real-Time Monitoring:** 
+  - Live telemetry for Soil Moisture (VWC), Temperature, and Humidity.
+  - Interactive charts for historical trends directly on the mobile device.
+- **🔍 AI Plant Disease Diagnosis:** 
+  - Instant diagnosis by capturing photos of affected crops.
+  - Integration with the AgriCulture Computer Vision backend.
+- **🐝 Insect AI Identification:** 
+  - Identify pests and beneficial insects using the mobile camera.
+  - Receive actionable advice on pest management.
+- **🎵 Plant Sound Analysis:** 
+  - Access IoT-based acoustic health monitoring.
+  - Receive push notifications when plants exhibit stress-related acoustic patterns.
+- **🌍 Multi-Language & Localized support:** 
+  - Full support for **French** and **Tunisian Derja** to ensure every farmer can use the tool effectively.
+- **📶 Offline-First Capabilities:** 
+  - Capture field data and photos without an internet connection; auto-sync once back online.
+
+### 🚀 Getting Started
+1. **Prerequisites:** 
+   - Ensure you have the [Flutter SDK](https://docs.flutter.dev/get-started/install) installed.
+   - Flutter version 3.x or higher is recommended.
+2. **Setup:**
+   ```bash
+   cd mobile_app  # Navigate to the mobile project folder
+   flutter pub get
+   ```
+3. **Run:**
+   ```bash
+   flutter run
+   ```
+
+---
+*Developed as part of the AgriCulture Ecosystem.*
+
+
+
+
+
+
+
 ## 📸 Screenshots
 
 *Coming soon — screenshots of the platform's key modules and dashboards.*
@@ -266,3 +319,8 @@ We would like to express our deepest gratitude to our **Professor** for their in
 <p align="center">
   <sub>© 2026 CropDNA Platform — Bridging Genetics and Agriculture 🌱</sub>
 </p>
+
+
+
+
+
